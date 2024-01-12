@@ -488,7 +488,7 @@ class Compiler {
 			});
 		};
 
-		// run，主要是流程： beforeRun 钩子 --> beforeRun 钩子 --> this.compile
+		// run，主要是流程： beforeRun 钩子 --> Run 钩子 --> this.compile
 		// 如果遇到 error，就执行 finalCallback
 		// 这里调用 beforeRun、run 主要就是提供 plugin 执行时机
 		const run = () => {

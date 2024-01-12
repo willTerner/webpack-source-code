@@ -259,7 +259,7 @@ createCompiler 函数主要的逻辑就是：
 3. 将 options（经过格式化后的 webpack.config.js ）挂载到 compiler 上
 4. NodeEnvironmentPlugin 把文件系统挂载到 compiler 对象上
    - 如 infrastructureLogger(log插件)、inputFileSystem(文件输入插件)、outputFileSystem(文件输出插件)、watchFileSystem(监听文件输入插件) 等
-5. 注册所有的插件
+5. 注册所有的插件(注册插件就是注册hook，apply只是注册插件的规范)
    - 如果插件是一个函数，用 call 的形式调用这个函数，并把 compiler 当参数
    - 如果插件是对象形式，那么插件身上都会有 apply 这个函数，调用插件的 apply 函数并把 compiler 当参数
 6. 调用 compiler 身上的一些钩子
@@ -426,7 +426,7 @@ class Compiler {
     // 定义了一个 onCompiled 函数，主要是传给 this.compile 作为执行的回调函数
     const onCompiled = (err, compilation) => {}
         
-    // run，主要是流程： beforeRun 钩子 --> beforeRun 钩子 --> this.compile
+    // run，主要是流程： beforeRun 钩子 --> Run 钩子 --> this.compile
 		// 如果遇到 error，就执行 finalCallback
 		// 这里调用 beforeRun、run 主要就是提供 plugin 执行时机
 		const run = () => {
@@ -868,6 +868,7 @@ class Compilation {
     // 调用 addEntry 钩子
 		this.hooks.addEntry.call(entry, options);
         // 调用 this.addModuleTree 将当前的模块加入到 module tree(模块树)
+        // TO-DO 模块树是什么
         this.addModuleTree({}, (err, module) => {})
     }
 
@@ -886,6 +887,7 @@ class Compilation {
     )
     {
         // 创建了模块图
+        // TO-DO 模块图是什么
         const moduleGraph = this.moduleGraph;
 		
         // 6
