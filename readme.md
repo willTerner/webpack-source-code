@@ -1336,12 +1336,7 @@ class JavascriptParser extends Parser {
 
 AST 遍历完毕后，调用 `module.handleParseResult` 处理模块依赖
 
-对于 `module` 新增的依赖，调用 `handleModuleCreate` ，递归解析依赖
-
-所有依赖都解析完毕后，构建阶段结束
-
 这个过程中数据流 `module => ast => dependences => module` ，先转 AST 再从 AST 找依赖
-
 
 
 接下来就回到了 compilation.processModuleDependencies 对 module 递归进行依赖收集
@@ -1413,7 +1408,12 @@ class Compilation {
 
 - 循环执行 compilation.handleModuleCreation 再进行模块转换、依赖收集
 
+对于 `module` 新增的依赖，调用 `handleModuleCreation` ，递归解析依赖
+
+所有依赖都解析完毕后，构建阶段结束
+
 总结就是收集依赖模块，并对依赖模块再进行相同的模块处理
+
 
 
 

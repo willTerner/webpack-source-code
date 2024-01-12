@@ -34,7 +34,7 @@ class EntryPlugin {
 		compiler.hooks.compilation.tap(
 			"EntryPlugin",
 			(compilation, { normalModuleFactory }) => {
-        // 往 compilation.dependencyFactories 中添加 EntryDependency 与 normalModuleFactory
+        // 往 compilation.dependencyFactories 为 EntryDependency 设置 normalModuleFactory
 				compilation.dependencyFactories.set(
 					EntryDependency,
 					normalModuleFactory
